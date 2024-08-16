@@ -24,14 +24,14 @@ class Ball():
         self.body = pymunk.Body(mass=1, moment=pymunk.moment_for_circle(1, 0, 10))
         self.body.position = x, y
         self.body.velocity = random.randint(-400, 400), random.randint(-400, 400)
-        self.shape = pymunk.Circle(self.body, 10)
+        self.shape = pymunk.Circle(self.body, 5)
         self.shape.elasticity = 1
         self.shape.density = 1
         self.shape.collision_type = collision_type
         space.add(self.body, self.shape)
 
     def draw(self):
-        pygame.draw.circle(display, black, convert_coordinates(self.body.position), 10)
+        pygame.draw.circle(display, black, convert_coordinates(self.body.position), 5)
 
 class Open_Circle():
     def __init__(self, collision_type, start_angle=0, end_angle=math.pi*2):
@@ -67,7 +67,7 @@ balls = [Ball(200 * (i+1), 200 * (i+1), 2) for i in range(2)]
 def collide(arbiter, space, data):
     global ball_count
     
-    if ball_count < 50:
+    if ball_count < 500:
         ball_count += 1
         if len(balls) < ball_count:
             balls.append(Ball(random.randint(150, 400), random.randint(100, 400), 2)) 
