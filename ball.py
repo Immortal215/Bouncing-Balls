@@ -62,7 +62,7 @@ class Open_Circle():
             p2 = convert_coordinates(segment.b + self.body.position)
             pygame.draw.line(display, black, p1, p2, 5)
             
-balls = [Ball(random.randint(150,400), random.randint(100,400), 2) for i in range(2)] 
+balls = [Ball(200 * (i+1), 200 * (i+1), 2) for i in range(2)] 
 
 def collide(arbiter, space, data):
     global ball_count
@@ -85,8 +85,6 @@ def game():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit() 
-
-        
         
         display.fill(white)
         [ball.draw() for ball in balls]
