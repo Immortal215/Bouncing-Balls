@@ -8,27 +8,29 @@ pygame.init()
 display = pygame.display.set_mode([600, 600])
 clock = pygame.time.Clock()
 space = pymunk.Space()
-FPS = 60
+FPS = 60 # how fast it will run 
 
 white = (255, 255, 255)
 black = (0, 0, 0)
-ball_count = 2
+ball_count = 2 # change count to what you need                                     
 
-space.gravity = (0, -200)
+space.gravity = (0, -300) # gravity, change second number for a stronger gravity 
 
 def convert_coordinates(points):
     return int(points[0]), 600 - int(points[1])
 
 class Ball():
-    def __init__(self, x, y, collision_type):
+    def __init__(self, x, y, collision_type):               
+        # ball with gravity and collisions and bounciness 
         self.body = pymunk.Body(mass=1, moment=pymunk.moment_for_circle(1, 0, 10))
         self.body.position = x, y
-        self.body.velocity = random.randint(-400, 400), random.randint(-400, 400)
+        self.body.velocity = random.randint(-200, 200), -200 # x and y velocity of new balls                                                                                                             
         self.shape = pymunk.Circle(self.body, 5)
-        self.shape.elasticity = 1
+        self.shape.elasticity = 1 # bounciness
         self.shape.density = 1
         self.shape.collision_type = collision_type
         space.add(self.body, self.shape)
+        
 
     def draw(self):
         pygame.draw.circle(display, black, convert_coordinates(self.body.position), 5)
@@ -40,8 +42,9 @@ class Open_Circle():
         
         self.segments = []
         self.radius = 250
-        num_segments = 5000 
+        num_segments = 1000 # too many and it will lag 
 
+        # create a circle using lines
         for i in range(num_segments):
             angle1 = start_angle + (end_angle - start_angle) * i / num_segments
             angle2 = start_angle + (end_angle - start_angle) * (i + 1) / num_segments
@@ -61,25 +64,41 @@ class Open_Circle():
             p1 = convert_coordinates(segment.a + self.body.position)
             p2 = convert_coordinates(segment.b + self.body.position)
             pygame.draw.line(display, black, p1, p2, 5)
-            
-balls = [Ball(200 * (i+1), 200 * (i+1), 2) for i in range(2)] 
 
+# organizes x of balls to be in an order of equal divisions
+rangesx = []
+value = 425/min(ball_count, 10) 
+for i in range((ball_count) // 10 + 1):
+    for i in range(min(ball_count, 10)):
+            rangesx.append(105 + (value * (i)))
+
+# organizes y of balls to make sure they are on seperate lines
+rangesy = [] 
+numberInBalls = 0
+for i in range((ball_count) // 10 + 1):
+    for i in range(min(ball_count, 10)):
+        rangesy.append(400 - (50 * (numberInBalls)))
+    numberInBalls += 1 
+     
+balls = [Ball(rangesx[i], rangesy[i], 2) for i in range(ball_count)] # first balls created 
+
+# on collide, create new ball
 def collide(arbiter, space, data):
     global ball_count
     
-    if ball_count < 500:
+    if ball_count < 500: # change if you wanna crash your pc 
         ball_count += 1
         if len(balls) < ball_count:
-            balls.append(Ball(random.randint(150, 400), random.randint(100, 400), 2)) 
+            balls.append(Ball(random.randint(100, 500), 450, 2)) 
             return True
 
 def game():   
     open_circle = Open_Circle(1)  
-    
-    handler = space.add_collision_handler(2, 2)
-    handler.post_solve = collide
 
-    handler = space.add_wildcard_collision_handler(1)
+    handler = space.add_collision_handler(2, 2) # any ball can collide with another ball, 2 is collision_type for ball
+    handler.post_solve = collide # after colliding, specifically only balls, will run this function
+
+    handler = space.add_wildcard_collision_handler(1) # everything collides with circle, 1 is collision_type for circle
     
     while True:            
         for event in pygame.event.get():
