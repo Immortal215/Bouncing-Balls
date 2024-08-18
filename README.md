@@ -1,7 +1,7 @@
 > [!NOTE]
-> To run
+> ↓↓ To run in terminal ↓↓
 
-```
+```terminal
 pip install pymunk pygame
 python ball.py
 ```
