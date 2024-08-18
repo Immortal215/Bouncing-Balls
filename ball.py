@@ -85,7 +85,7 @@ balls = [Ball(rangesx[i], rangesy[i], 2) for i in range(ball_count)] # first bal
 def collide(arbiter, space, data):
     global ball_count
     
-    if ball_count < 500: # change if you wanna crash your pc 
+    if ball_count < 500: # change if you wanna crash your pc, sets a limit on the amount of balls you want to add 
         ball_count += 1
         if len(balls) < ball_count:
             balls.append(Ball(random.randint(100, 500), 450, 2)) 
