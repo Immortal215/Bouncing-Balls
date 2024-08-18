@@ -64,14 +64,14 @@ class Open_Circle():
             p2 = convert_coordinates(segment.b + self.body.position)
             pygame.draw.line(display, black, p1, p2, 5)
 
-# organizes x of balls to be in an order of equal divisions
+# organizes x point of balls to be in an order of equal divisions
 rangesx = []
 value = 425/min(ball_count, 10) 
 for i in range((ball_count) // 10 + 1):
     for i in range(min(ball_count, 10)):
             rangesx.append(105 + (value * (i)))
 
-# organizes y of balls to make sure they are on seperate lines
+# organizes y point of balls to make sure they are on seperate lines
 rangesy = [] 
 numberInBalls = 0
 for i in range((ball_count) // 10 + 1):
