@@ -25,15 +25,14 @@ class Ball():
         self.body = pymunk.Body(mass=1, moment=pymunk.moment_for_circle(1, 0, 10))
         self.body.position = x, y
         self.body.velocity = random.randint(-200, 200), -200 # x and y velocity of new balls                                                                                                             
-        self.shape = pymunk.Circle(self.body, 5)
+        self.shape = pymunk.Circle(self.body, 5) # if you want to change ball size, change this radius and line 36
         self.shape.elasticity = 1 # bounciness
         self.shape.density = 1
         self.shape.collision_type = collision_type
         space.add(self.body, self.shape)
         
-
     def draw(self):
-        pygame.draw.circle(display, black, convert_coordinates(self.body.position), 5)
+        pygame.draw.circle(display, black, convert_coordinates(self.body.position), 5) #  if you want to change ball size, change this radius and line 28
 
 class Open_Circle():
     def __init__(self, collision_type, start_angle=0, end_angle=math.pi*2):
@@ -112,6 +111,6 @@ def game():
 
         clock.tick(FPS)
         space.step(1/FPS)
-
+        
         
 game()
