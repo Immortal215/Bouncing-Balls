@@ -14,7 +14,7 @@ white = (255, 255, 255)
 black = (0, 0, 0)
 ball_count = 2 # change count to what you need                                     
 
-space.gravity = (0, -300) # gravity, change second number for a stronger gravity 
+space.gravity = (0, -300) # gravity, change first number for x gravity, change second number for y gravity
 
 def convert_coordinates(points):
     return int(points[0]), 600 - int(points[1])
