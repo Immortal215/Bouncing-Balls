@@ -97,6 +97,7 @@ def game():
     handler = space.add_collision_handler(2, 2) # any ball can collide with another ball, 2 is collision_type for ball
     handler.post_solve = collide # after colliding, specifically only balls, will run this function
 
+    handler = space.add_wildcard_collision_handler(2) # any ball can collide with another ball, 2 is collision_type for ball
     handler = space.add_wildcard_collision_handler(1) # everything collides with circle, 1 is collision_type for circle
     
     while True:            
